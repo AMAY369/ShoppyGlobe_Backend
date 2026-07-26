@@ -1,40 +1,88 @@
 # ShoppyGlobe Backend
 
-## Project Overveiw
-ShoppyGlobe is a backend API for an E-commerce application built using Node.js, Express, and MongoDB. This API allows to register users and login users, to manage products, CRUD operations on shopping cart, and implementation of user authentication through JWT (JSON Web Tokens).
+REST API for the ShoppyGlobe e-commerce application, built with Node.js, Express and MongoDB. It handles user registration and login with JWT authentication, product management, and shopping cart operations.
+
+The React storefront that consumes this API lives in [ShoppyGlobe-E-commerce-Application](https://github.com/AMAY369/ShoppyGlobe-E-commerce-Application).
 
 ## Features
+
 - User registration and login with JWT authentication
-- Product management (CRUD operations)
-- Shopping cart functionality (add, update, delete products)
-- Input validation and error handling
+- Product management with full CRUD
+- Shopping cart: add, update quantity, remove
+- Input validation and consistent error handling
+- Protected routes via auth middleware
 
-## Installation
-- Clone the repositry in your local system
-- run `npm install`
-- Add your MONGODB_URI, PORT, and JSW_SECRET_KEY in .env file
-- run `npm start` to run project
-- Now you can perform operations using ThunderClient or PostMan on `http://localhost:3000/api`
+## Tech Stack
 
-## ThunderClient
-- Use ThunderClient to register new user
-- Login user with authentication
-- Fetch all products or single product by its objectId
-- Perform CRUD opertaions on cart
-- Routes for performing all these operations given below-
+Node.js, Express, MongoDB, Mongoose, JWT, bcrypt
 
-## Routes
-- register a new user (POST) - `http:localhost:3000/api/register`
-- verify an existing user (POST) - `http:localhost:3000/api/login`
-- add a new product (POST) - `http:localhost:3000/api/product`
-- fetch all the products (GET) - `http:localhost:3000/api/products`
-- Fetch a product by its id (GET) - `http:localhost:3000/api/products/67cc79591005f743a7f663e2`
-- add item to the cart (POST) - `http:localhost:3000/api/cart/add-item`
-- update the quantity of an item in cart(PUT) - `http:localhost:3000/api/update-item`
-- delete an item from cart (DELETE) - `http:localhost:3000/api/delete-item`
-- fetch cart (GET) - `http:localhost:3000/api/cart`
+## Getting Started
 
-## Screenshots of tests
-- [Screenshots of ThunderClient and MongoDB Compass](https://docs.google.com/document/d/1KVgILt6zuAP_6w0H-XHFsK6XsK5_E0sx/edit?usp=drive_link&ouid=108783048371498840209&rtpof=true&sd=true)
+### Prerequisites
 
+- Node.js 18 or later
+- A MongoDB connection string
 
+### Setup
+
+```sh
+git clone https://github.com/AMAY369/ShoppyGlobe_Backend.git
+cd ShoppyGlobe_Backend
+npm install
+```
+
+Create a `.env` file in the project root:
+
+```
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET_KEY=your_jwt_secret
+```
+
+Start the server:
+
+```sh
+npm start
+```
+
+The API is served from `http://localhost:3000/api`.
+
+## API Reference
+
+Base URL: `http://localhost:3000/api`
+
+### Authentication
+
+| Method | Endpoint | Description | Auth |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/register` | Register a new user | No |
+| `POST` | `/login` | Log in and receive a JWT | No |
+
+### Products
+
+| Method | Endpoint | Description | Auth |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/products` | List all products | No |
+| `GET` | `/products/:id` | Get a single product by id | No |
+
+### Cart
+
+| Method | Endpoint | Description | Auth |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/cart` | Add a product to the cart | Yes |
+| `PUT` | `/cart/:id` | Update the quantity of a cart item | Yes |
+| `DELETE` | `/cart/:id` | Remove an item from the cart | Yes |
+
+Protected routes expect the token in the request header:
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+## Testing
+
+The endpoints can be exercised with Postman or Thunder Client. Register a user first, log in to obtain a token, then use that token for the cart routes.
+
+## License
+
+MIT
